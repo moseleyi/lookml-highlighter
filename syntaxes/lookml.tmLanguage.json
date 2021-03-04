@@ -1,0 +1,82 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "LookML",
+	"patterns": [
+		{"include": "#scope"},
+		{"include": "#parameter"},
+		{"include": "#strings"},
+		{"include": "#array"},
+		{"include": "#sql_trigger"}
+	],
+	"repository": {
+
+		"variable": {
+			"name": "source.lookml.variable",
+			"match": "\\${.+}",
+			"patterns": [{
+				"name": "constant.character.escape.lookml",
+				"match": "\\\\."
+			}]
+		},
+
+		"scope": {
+			"name": "source.lookml.scope",
+			"match": "([a-z_]+)\\s?:\\s?([a-z_\\+]+)\\s?{",
+			"captures": {
+				"1": {
+					"name": "source.lookml.scope.type"
+				},
+				"2": {
+					"name": "source.lookml.scope.name"
+				}
+			}
+		},
+
+		"parameter": {
+			"name": "source.lookml.parameter",
+			"match": "([a-z\\_]+)\\s?:",
+			"captures": {
+				"1": {
+					"name": "source.lookml.parameter.name"
+				}
+			}
+		},
+
+		"array": {
+			"name": "source.lookml.array",
+			"begin": "\\[",
+			"end": "\\]",
+			"patterns": [
+				{"include": "#strings"}
+			]
+		},
+
+		"sql_trigger": {
+			"name": "source.lookml.sql",
+			"begin": "sql_trigger",
+			"end": ";;"
+		},
+
+		"yesno": {
+			"name": "source.lookml.parameter.value.yesno",
+			"match": "\\b(yes|no|yesno)\\b"
+		},
+
+		"strings": {
+			"name": "string.quoted.double.lookml",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.lookml",
+					"match": "\\\\."
+				},
+				{
+					"name": "constant.character.escape.lookml",
+					"match": "#."
+				}
+			]
+		}
+	},
+	"scopeName": "source.lookml"
+}

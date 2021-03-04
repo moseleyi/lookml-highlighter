@@ -1,0 +1,25 @@
+{
+    "name": "lookml-highlighter",
+    "displayName": "LookML Highlighter",
+    "description": "Syntax highlighting for LookML",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.53.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "lookml",
+            "aliases": ["LookML", "lookml"],
+            "extensions": [".lkml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "lookml",
+            "scopeName": "source.lookml",
+            "path": "./syntaxes/lookml.tmLanguage.json"
+        }]
+    }
+}
