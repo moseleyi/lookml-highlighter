@@ -2,14 +2,11 @@
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "LookML",
 	"patterns": [
-		{"include": "#scope"},
-		{"include": "#parameter"},
-		{"include": "#strings"},
-		{"include": "#array"},
-		{"include": "#sql_trigger"}
+		{"include": "#scopes"},
+		{"include": "#sql_parameters"},
+		{"include": "#parameters"}
 	],
 	"repository": {
-
 		"variable": {
 			"name": "source.lookml.variable",
 			"match": "\\${.+}",
@@ -19,9 +16,9 @@
 			}]
 		},
 
-		"scope": {
+		"scopes": {
 			"name": "source.lookml.scope",
-			"match": "([a-z_]+)\\s?:\\s?([a-z_\\+]+)\\s?{",
+			"match": "([a-z_]+)\\s?:\\s?([a-z_\\+]+)?\\s?{(?!\\%)",
 			"captures": {
 				"1": {
 					"name": "source.lookml.scope.type"
@@ -32,14 +29,71 @@
 			}
 		},
 
-		"parameter": {
+		"parameters": {
 			"name": "source.lookml.parameter",
-			"match": "([a-z\\_]+)\\s?:",
-			"captures": {
+			"begin": "(?!sql)([a-z\\_]*)\\s?:",
+			"end": "(?<=\\n)",
+			"beginCaptures": {
 				"1": {
 					"name": "source.lookml.parameter.name"
 				}
+			},
+			"patterns": [
+				{
+					"name": "source.lookml.parameter.value",
+					"match": "(.*)",
+					"captures": {
+						"1": {
+							"patterns": [
+								{"include": "#variable"},
+								{"include": "#strings"},
+								{"include": "#yesno"},
+								{"include": "#array"}
+							]
+						}
+					}
+				}
+			]
+		},
+
+		"liquid": {
+			"name": "source.lookml.liquid",
+			"begin": "\\{\\%",
+			"end" : "\\%\\}",
+			"captures": {
+				"0": {
+					"name": "source.lookml.liquid"
+				}
 			}
+		},
+
+		"sql_parameters": {
+			"name": "source.lookml.sql_parameter",
+			"begin": "(sql[a-z\\_]*)\\s?:",
+			"end": "(?<=;;)",
+			"beginCaptures": {
+				"1": {
+					"name": "source.lookml.sql_parameter.name"
+				}
+			},
+			"patterns": [
+				{
+					"name": "source.lookml.sql_parameter.value",
+					"match": "([^;]+)",
+					"captures": {
+						"1": {
+							"patterns": [
+								{"include": "#liquid"},
+								{"include": "#variable"}
+							]
+						}
+					}
+				},
+				{
+					"name": "source.lookml.sql_parameter.close",
+					"match": ";;$"
+				}
+			]
 		},
 
 		"array": {
@@ -49,12 +103,6 @@
 			"patterns": [
 				{"include": "#strings"}
 			]
-		},
-
-		"sql_trigger": {
-			"name": "source.lookml.sql",
-			"begin": "sql_trigger",
-			"end": ";;"
 		},
 
 		"yesno": {
