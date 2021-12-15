@@ -3,6 +3,7 @@
 	"name": "LookML",
 	"patterns": [
 		{"include": "#scopes"},
+		{"include": "#comments"},
 		{"include": "#sql_parameters"},
 		{"include": "#parameters"}
 	],
@@ -14,6 +15,11 @@
 				"name": "constant.character.escape.lookml",
 				"match": "\\\\."
 			}]
+		},
+
+		"comments": {
+			"name": "source.lookml.comment",
+			"match": "#(.+)"
 		},
 
 		"scopes": {
