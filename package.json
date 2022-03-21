@@ -2,7 +2,7 @@
     "name": "lookml-highlighter",
     "displayName": "LookML Highlighter",
     "description": "Syntax highlighting for LookML",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "publisher": "moseleyi",
     "engines": {
         "vscode": "^1.53.0"
@@ -18,16 +18,25 @@
         "name": "Dawid Nawrot"
     },
     "contributes": {
-        "languages": [{
-            "id": "lookml",
-            "aliases": ["LookML", "lookml"],
-            "extensions": [".lkml"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "lookml",
-            "scopeName": "source.lookml",
-            "path": "./syntaxes/lookml.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "lookml",
+                "aliases": [
+                    "LookML",
+                    "lookml"
+                ],
+                "extensions": [
+                    ".lkml"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "lookml",
+                "scopeName": "source.lookml",
+                "path": "./syntaxes/lookml.tmLanguage.json"
+            }
+        ]
     }
 }
