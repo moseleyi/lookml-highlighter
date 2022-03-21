@@ -3,12 +3,20 @@
     "displayName": "LookML Highlighter",
     "description": "Syntax highlighting for LookML",
     "version": "0.0.1",
+    "publisher": "moseleyi",
     "engines": {
         "vscode": "^1.53.0"
     },
     "categories": [
         "Programming Languages"
     ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/moseleyi/lookml-highlighter.git"
+    },
+    "author": {
+        "name": "Dawid Nawrot"
+    },
     "contributes": {
         "languages": [{
             "id": "lookml",
