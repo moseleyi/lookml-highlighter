@@ -45,8 +45,9 @@
         ],
         "themes": [
             {
+                "uiTheme":"vs",
                 "label": "LookML",
-                "path": "./lookml-colour-theme.json"
+                "path": "./theme/lookml-colour-theme.json"
             }
         ],
         "semanticTokenScopes": [
