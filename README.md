@@ -1,5 +1,16 @@
 # LookML Highlighter
 
+## To do
+
+### Recognition of multi-line arrays
+```
+timeframes: [
+    date,
+    month,
+    year
+]
+```
+---
 ## Colour theme
 
 The colours come from the official Looker IDE and are included in this extension. However, for dark themes, they may not be the best, hence I recommend changing it.
