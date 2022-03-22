@@ -2,7 +2,7 @@
     "name": "lookml-highlighter",
     "displayName": "LookML Highlighter",
     "description": "Syntax highlighting for LookML",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "publisher": "moseleyi",
     "engines": {
         "vscode": "^1.53.0"
@@ -45,7 +45,7 @@
         ],
         "themes": [
             {
-                "uiTheme":"vs",
+                "uiTheme": "vs",
                 "label": "LookML",
                 "path": "./theme/lookml-colour-theme.json"
             }
