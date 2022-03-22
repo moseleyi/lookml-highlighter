@@ -8,11 +8,6 @@
 		{"include": "#parameters"}
 	],
 	"repository": {
-		"variable": {
-			"name": "source.lookml.variable",
-			"match": "\\${[^\\}]+}"
-		},
-
 		"comments": {
 			"name": "source.lookml.comment",
 			"match": "#(.+)"
@@ -20,7 +15,7 @@
 
 		"scopes": {
 			"name": "source.lookml.scope",
-			"begin": "([a-z_]+)\\s?:\\s?([a-z_\\+]+)?\\s?(\\{)",
+			"begin": "(\\w+)\\s?:\\s?([\\w\\+]+)?\\s?(\\{)",
 			"end": "(\\})",
 			"beginCaptures": {
 				"1": {
@@ -39,20 +34,16 @@
 				}
 			},
 			"patterns": [
-				{"include": "#liquid_output"},
-				{"include": "#scopes"},
-				{"include": "#variables"},
-				{"include": "#liquid_tags"},
 				{"include": "#array"},
+				{"include": "#scopes"},
 				{"include": "#parameters"},
-				{"include": "#comments"},
 				{"include": "#sql_parameters"}
 			]
 		},
 
 		"parameters": {
 			"name": "source.lookml.parameter",
-			"begin": "(?!sql)([a-z\\_]*)\\s?:",
+			"begin": "(?!sql)(\\w+)\\s?:\\s?",
 			"end": "(?<=\\n)",
 			"beginCaptures": {
 				"1": {
@@ -60,7 +51,6 @@
 				}
 			},
 			"patterns": [
-				{"include": "#array"},
 				{
 					"name": "source.lookml.parameter.value",
 					"match": "(.*)",
@@ -69,13 +59,107 @@
 							"patterns": [
 								{"include": "#variable"},
 								{"include": "#string"},
-								{"include": "#yesno"},
-								{"include": "#array"}
+								{"include": "#yesno"}
 							]
 						}
 					}
 				}
 			]
+		},
+
+		"sql_parameters": {
+			"name": "source.lookml.sql.parameter",
+			"begin": "(sql\\w*)\\s?:\\s?",
+			"end": "(?<=;;)",
+			"beginCaptures": {
+				"1": {
+					"name": "source.lookml.sql.parameter.name"
+				}
+			},
+			"patterns": [
+				{
+					"name": "source.lookml.sql.parameter.value",
+					"match": "([^;]+)",
+					"captures": {
+						"1": {
+							"patterns": [
+								{"include": "#variable"},
+								{"include": "#string"},
+								{"include": "#liquid_tags"},
+								{"include": "#sql_constant"},
+								{"include": "#sql_function"},
+								{"include": "#sql_keyword"},
+								{"include": "#sql_keyword_main"},
+								{"include": "#sql_numeric"},
+								{"include": "#operator"}
+							]
+						}
+					}
+				},
+				{
+					"name": "source.lookml.sql.parameter.close",
+					"match": ";;$"
+				}
+			]
+		},
+
+		"string": {
+			"name": "string.quoted.double.lookml",
+			"begin": "\"|\\'",
+			"end": "\"|\\'",
+			"patterns": [
+				{"include": "#constant"},
+				{"include": "#liquid_output"}
+			]
+		},
+
+		"number": {
+		  "match": "((-|\\+)\\s*)?[0-9]+(\\.[0-9]+)?",
+		  "name": "constant.numeric.lookml"
+		},
+
+		"variable": {
+			"name": "source.lookml.variable",
+			"match": "\\${[^\\}]+}"
+		},
+
+		"operator": {
+			"match": "(?:(?<=\\s)|\\b)(\\=\\=|!\\=|\\>|\\<|\\>\\=|\\<\\=|or|and|contains)(?:(?=\\s)|\\b)",
+			"captures": {
+				"1": {
+				"name": "keyword.operator.expression.lookml"
+				}
+			}
+		},
+
+		"array": {
+			"name": "source.lookml.parameter.array",
+			"begin": "(\\w+)\\s?\\:\\s?(\\[)",
+			"end": "\\]",
+			"beginCaptures": {
+				"1": {"name": "source.lookml.parameter.name"},
+				"2": {"name": "source.lookml.parameter.array.start"}
+			},
+			"patterns": [
+				{"include": "#string"},
+				{
+					"name": "source.lookml.parameter.array.delimiter",
+					"match": "\\,"
+				}
+			],
+			"endCaptures": {
+				"0": {"name": "source.lookml.parameter.array.end"}
+			}
+		},
+
+		"yesno": {
+			"name": "source.lookml.parameter.value.yesno",
+			"match": "\\b(yes|no|yesno)\\b"
+		},
+
+		"constant": {
+			"name": "source.lookml.constant",
+			"match": "(@\\{[a-zA-Z0-9\\_]+\\})"
 		},
 
 		"liquid_tags": {
@@ -107,81 +191,6 @@
 			"captures": {
 				"1": {"name": "source.lookml.liquid.filter"}
 			}
-		},
-
-		"sql_parameters": {
-			"name": "source.lookml.sql.parameter",
-			"begin": "(sql[a-z\\_]*)\\s?:",
-			"end": "(?<=;;)",
-			"beginCaptures": {
-				"1": {
-					"name": "source.lookml.sql.parameter.name"
-				}
-			},
-			"patterns": [
-				{
-					"name": "source.lookml.sql.parameter.value",
-					"match": "([^;]+)",
-					"captures": {
-						"1": {
-							"patterns": [
-								{"include": "#sql_numeric"},
-								{"include": "#liquid_tags"},
-								{"include": "#variable"},
-								{"include": "#string"},
-								{"include": "#sql_function"},
-								{"include": "#sql_keyword"},
-								{"include": "#sql_constant"},
-								{"include": "#sql_keyword_main"},
-								{"include": "#operator"}
-							]
-						}
-					}
-				},
-				{
-					"name": "source.lookml.sql.parameter.close",
-					"match": ";;$"
-				}
-			]
-		},
-
-		"array": {
-			"name": "source.lookml.array",
-			"begin": "\\[",
-			"end": "\\]",
-			"beginCaptures": {
-				"0": {"name": "source.lookml.array.start"}
-			},
-			"patterns": [
-				{"include": "#string"},
-				{
-					"name": "source.lookml.array.delimiter",
-					"match": "\\,"
-				}
-			],
-			"endCaptures": {
-				"0": {"name": "source.lookml.array.end"}
-			}
-		},
-
-		"yesno": {
-			"name": "source.lookml.parameter.value.yesno",
-			"match": "\\b(yes|no|yesno)\\b"
-		},
-
-		"string": {
-			"name": "string.quoted.double.lookml",
-			"begin": "\"|\\'",
-			"end": "\"|\\'",
-			"patterns": [
-				{"include": "#constant"},
-				{"include": "#liquid_output"}
-			]
-		},
-
-		"constant": {
-			"name": "source.lookml.constant",
-			"match": "(@\\{[a-zA-Z0-9\\_]+\\})"
 		},
 
 		"sql_function": {
@@ -224,23 +233,9 @@
 			"match": "(?<!\\w)(SELECT|FROM|LEFT|JOIN|GROUP BY|INNER|ORDER BY|LIMIT)(?!\\w)"
 		},
 
-		"number": {
-		  "match": "((-|\\+)\\s*)?[0-9]+(\\.[0-9]+)?",
-		  "name": "constant.numeric.lookml"
-		},
-
 		"sql_constant": {
 			"name": "source.lookml.sql.constant.language",
 			"match": "TRUE|FALSE"
-		},
-
-		"operator": {
-			"match": "(?:(?<=\\s)|\\b)(\\=\\=|!\\=|\\>|\\<|\\>\\=|\\<\\=|or|and|contains)(?:(?=\\s)|\\b)",
-			"captures": {
-				"1": {
-				"name": "keyword.operator.expression.lookml"
-				}
-			}
 		}
 	},
 	"scopeName": "source.lookml"
