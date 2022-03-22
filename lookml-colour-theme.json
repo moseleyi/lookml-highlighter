@@ -1,8 +1,5 @@
 {
   "type": "light",
-  "colors": {
-    "editor.background": "#ffffff"
-  },
   "tokenColors": [
     {"scope": ["source.lookml.scope"], "settings": {"foreground": "#aaaaaa"}},
     {"scope": ["source.lookml.scope.type"], "settings": {"foreground": "#6997bf"}},
