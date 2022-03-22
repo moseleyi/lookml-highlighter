@@ -89,7 +89,8 @@
 				"1": {"name": "source.lookml.liquid.tag"}
 			},
 			"patterns": [
-				{"include": "#strings"}
+				{"include": "#strings"},
+				{"include": "#operator"}
 			]
 		},
 
@@ -121,7 +122,8 @@
 								{"include": "#sql_function"},
 								{"include": "#sql_keyword"},
 								{"include": "#sql_constant"},
-								{"include": "#sql_keyword_main"}
+								{"include": "#sql_keyword_main"},
+								{"include": "#operator"}
 							]
 						}
 					}
@@ -197,13 +199,14 @@
 				{"include": "#sql_numeric"},
 				{"include": "#sql_constant"},
 				{"include": "#sql_keyword"},
-				{"include": "#sql_keyword_main"}
+				{"include": "#sql_keyword_main"},
+				{"include": "#operator"}
 			]
 		},
 
 		"sql_keyword" : {
 			"name": "source.lookml.sql.keyword",
-			"match": "(?<!\\w)([\\=\\-\\/\\*\\+]|AND|OR|IS|NOT|NULL|DISTINCT|AS|ON|WITH)(?!\\w)"
+			"match": "(?<!\\w)(AND|OR|IS|NOT|NULL|DISTINCT|AS|ON|WITH)(?!\\w)"
 		},
 
 		"sql_keyword_main": {
@@ -219,6 +222,15 @@
 		"sql_constant": {
 			"name": "source.lookml.sql.constant",
 			"match": "TRUE|FALSE"
+		},
+
+		"operator": {
+			"match": "(?:(?<=\\s)|\\b)(\\=\\=|!\\=|\\>|\\<|\\>\\=|\\<\\=|or|and|contains)(?:(?=\\s)|\\b)",
+			"captures": {
+				"1": {
+				"name": "keyword.operator.expression.lookml"
+				}
+			}
 		}
 	},
 	"scopeName": "source.lookml"
