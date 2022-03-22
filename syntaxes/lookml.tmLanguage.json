@@ -107,7 +107,8 @@
 								{"include": "#liquid"},
 								{"include": "#variable"},
 								{"include": "#sql_function"},
-								{"include": "#sql_keyword"}
+								{"include": "#sql_keyword"},
+								{"include": "#sql_constant"}
 							]
 						}
 					}
@@ -168,18 +169,24 @@
 			"patterns": [
 				{"include": "#sql_function"},
 				{"include": "#variable"},
-				{"include": "#sql_numeric"}
+				{"include": "#sql_numeric"},
+				{"include": "#sql_constant"}
 			]
 		},
 
 		"sql_keyword" : {
 			"name": "source.lookml.sql.keyword",
-			"match": "[\\=\\-\\/\\*\\+]"
+			"match": "[\\=\\-\\/\\*\\+]|AND|OR|IS|NOT|NULL"
 		},
 
 		"sql_numeric": {
 			"name": "source.lookml.sql.numeric",
 			"match": "[0-9]+\\.?"
+		},
+
+		"sql_constant": {
+			"name": "source.lookml.sql.constant",
+			"match": "TRUE|FALSE"
 		}
 	},
 	"scopeName": "source.lookml"
