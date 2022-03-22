@@ -26,6 +26,7 @@
     {"scope": ["source.lookml.comment"],                  "settings": {"foreground": "#aaaaaa", "fontStyle": "italic"}},
     {"scope": ["source.lookml.constant"],                 "settings": {"foreground": "#00008b"}},
     {"scope": ["source.lookml.sql.keyword",
+               "source.lookml.sql.function.argument.keyword",
                "keyword.operator.expression.lookml"],     "settings": {"foreground": "#0C6FFF"}},
     {"scope": ["source.lookml.sql.keyword.main"],         "settings": {"foreground": "#555555"}}
   ],

@@ -4,8 +4,8 @@
 	"patterns": [
 		{"include": "#scopes"},
 		{"include": "#comments"},
-		{"include": "#sql_parameters"},
-		{"include": "#parameters"}
+		{"include": "#parameters"},
+		{"include": "#sql_parameters"}
 	],
 	"repository": {
 		"comments": {
@@ -15,7 +15,7 @@
 
 		"scopes": {
 			"name": "source.lookml.scope",
-			"begin": "(\\w+)\\s?:\\s?([\\w\\+]+)?\\s?(\\{)",
+			"begin": "(\\w+)\\s*?:\\s?([\\w\\+]+)?\\s*?(\\{)",
 			"end": "(\\})",
 			"beginCaptures": {
 				"1": {
@@ -34,10 +34,11 @@
 				}
 			},
 			"patterns": [
+				{"include": "#liquid_tags"},
 				{"include": "#array"},
-				{"include": "#scopes"},
+				{"include": "#sql_parameters"},
 				{"include": "#parameters"},
-				{"include": "#sql_parameters"}
+				{"include": "#scopes"}
 			]
 		},
 
@@ -84,14 +85,16 @@
 						"1": {
 							"patterns": [
 								{"include": "#variable"},
+								{"include": "#operator"},
 								{"include": "#string"},
+								{"include": "#number"},
 								{"include": "#liquid_tags"},
+								{"include": "#liquid_output"},
 								{"include": "#sql_constant"},
 								{"include": "#sql_function"},
 								{"include": "#sql_keyword"},
 								{"include": "#sql_keyword_main"},
-								{"include": "#sql_numeric"},
-								{"include": "#operator"}
+								{"include": "#sql_numeric"}
 							]
 						}
 					}
@@ -124,7 +127,7 @@
 		},
 
 		"operator": {
-			"match": "(?:(?<=\\s)|\\b)(\\=\\=|!\\=|\\>|\\<|\\>\\=|\\<\\=|or|and|contains)(?:(?=\\s)|\\b)",
+			"match": "(?:(?<=\\s)|\\b)(\\=|\\=\\=|!\\=|\\>|\\<|\\>\\=|\\<\\=|or|and|contains)(?:(?=\\s)|\\b)",
 			"captures": {
 				"1": {
 				"name": "keyword.operator.expression.lookml"
@@ -159,7 +162,7 @@
 
 		"constant": {
 			"name": "source.lookml.constant",
-			"match": "(@\\{[a-zA-Z0-9\\_]+\\})"
+			"match": "(@\\{\\w+\\})"
 		},
 
 		"liquid_tags": {
@@ -169,15 +172,15 @@
 			"beginCaptures": {
 				"1": {"name": "source.lookml.liquid.tag"}
 			},
-			"endCaptures": {
-				"1": {"name": "source.lookml.liquid.tag"}
-			},
 			"patterns": [
 				{"include": "#liquid_filter"},
 				{"include": "#string"},
 				{"include": "#operator"},
 				{"include": "#number"}
-			]
+			],
+			"endCaptures": {
+				"1": {"name": "source.lookml.liquid.tag"}
+			}
 		},
 
 		"liquid_output": {
@@ -187,7 +190,7 @@
 
 		"liquid_filter":  {
 			"name": "source.lookml.liquid",
-			"match": "\\|\\s*((?![\\.0-9])[a-zA-Z0-9_-]+\\:?)\\s*",
+			"match": "\\|\\s*((?![\\.0-9])[\\w\\-]+\\:?)\\s*",
 			"captures": {
 				"1": {"name": "source.lookml.liquid.filter"}
 			}
@@ -195,7 +198,7 @@
 
 		"sql_function": {
 			"name": "source.lookml.sql.function",
-			"begin": "([A-Za-z\\_0-9]+)(\\()",
+			"begin": "(\\w+)(\\()",
 			"end": "(\\))",
 			"contentName": "source.lookml.sql.function.value",
 			"beginCaptures": {

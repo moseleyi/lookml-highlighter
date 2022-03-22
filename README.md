@@ -2,14 +2,7 @@
 
 ## To do
 
-### Recognition of multi-line arrays
-```
-timeframes: [
-    date,
-    month,
-    year
-]
-```
+- Recognition of Liquid tags {% %} when they're multi-line
 ---
 ## Colour theme
 
