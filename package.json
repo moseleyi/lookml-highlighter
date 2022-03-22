@@ -2,7 +2,7 @@
     "name": "lookml-highlighter",
     "displayName": "LookML Highlighter",
     "description": "Syntax highlighting for LookML",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "moseleyi",
     "engines": {
         "vscode": "^1.53.0"
@@ -18,9 +18,9 @@
         "name": "Dawid Nawrot"
     },
     "configurationDefaults": {
-      "[lookml]": {
-        "editor.semanticHighlighting.enabled": true
-      }
+        "[lookml]": {
+            "editor.semanticHighlighting.enabled": true
+        }
     },
     "contributes": {
         "languages": [
@@ -44,15 +44,38 @@
             }
         ],
         "themes": [
-            {"label": "LookML", "path": "./lookml-colour-theme.json"}
+            {
+                "label": "LookML",
+                "path": "./lookml-colour-theme.json"
+            }
         ],
         "semanticTokenScopes": [
-          {
-            "language": "lookml",
-            "scopes": {
-              "templateType": ["source.lookml.scope", "source.lookml.scope.type", "source.lookml.scope.name", "source.lookml.scope.start", "source.lookml.parameter.name", "string.quoted.double.lookml", "source.lookml.variable", "source.lookml.parameter.value.yesno", "source.lookml.array", "source.lookml.parameter.value", "source.lookml.sql.parameter.name", "source.lookml.sql.parameter.value", "source.lookml.sql.parameter.close", "source.lookml.sql.function.name", "source.lookml.liquid", "source.lookml.comment", "source.lookml.constant", "source.lookml.sql.keyword", "source.lookml.sql.numeric"]
+            {
+                "language": "lookml",
+                "scopes": {
+                    "templateType": [
+                        "source.lookml.scope",
+                        "source.lookml.scope.type",
+                        "source.lookml.scope.name",
+                        "source.lookml.scope.start",
+                        "source.lookml.parameter.name",
+                        "string.quoted.double.lookml",
+                        "source.lookml.variable",
+                        "source.lookml.parameter.value.yesno",
+                        "source.lookml.array",
+                        "source.lookml.parameter.value",
+                        "source.lookml.sql.parameter.name",
+                        "source.lookml.sql.parameter.value",
+                        "source.lookml.sql.parameter.close",
+                        "source.lookml.sql.function.name",
+                        "source.lookml.liquid",
+                        "source.lookml.comment",
+                        "source.lookml.constant",
+                        "source.lookml.sql.keyword",
+                        "source.lookml.sql.numeric"
+                    ]
+                }
             }
-          }
         ]
     }
 }
