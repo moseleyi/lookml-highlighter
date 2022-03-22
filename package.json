@@ -17,6 +17,11 @@
     "author": {
         "name": "Dawid Nawrot"
     },
+    "configurationDefaults": {
+      "[lookml]": {
+        "editor.semanticHighlighting.enabled": true
+      }
+    },
     "contributes": {
         "languages": [
             {
@@ -37,6 +42,17 @@
                 "scopeName": "source.lookml",
                 "path": "./syntaxes/lookml.tmLanguage.json"
             }
+        ],
+        "themes": [
+            {"label": "LookML", "path": "./lookml-colour-theme.json"}
+        ],
+        "semanticTokenScopes": [
+          {
+            "language": "lookml",
+            "scopes": {
+              "templateType": ["source.lookml.scope", "source.lookml.scope.type", "source.lookml.scope.name", "source.lookml.scope.start", "source.lookml.parameter.name", "string.quoted.double.lookml", "source.lookml.variable", "source.lookml.parameter.value.yesno", "source.lookml.array", "source.lookml.parameter.value", "source.lookml.sql.parameter.name", "source.lookml.sql.parameter.value", "source.lookml.sql.parameter.close", "source.lookml.sql.function.name", "source.lookml.liquid", "source.lookml.comment", "source.lookml.constant", "source.lookml.sql.keyword", "source.lookml.sql.numeric"]
+            }
+          }
         ]
     }
 }
