@@ -230,7 +230,7 @@
 		},
 
 		"sql_constant": {
-			"name": "source.lookml.sql.constant",
+			"name": "source.lookml.sql.constant.language",
 			"match": "TRUE|FALSE"
 		},
 
