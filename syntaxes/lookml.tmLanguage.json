@@ -68,7 +68,7 @@
 						"1": {
 							"patterns": [
 								{"include": "#variable"},
-								{"include": "#strings"},
+								{"include": "#string"},
 								{"include": "#yesno"},
 								{"include": "#array"}
 							]
@@ -89,14 +89,24 @@
 				"1": {"name": "source.lookml.liquid.tag"}
 			},
 			"patterns": [
-				{"include": "#strings"},
-				{"include": "#operator"}
+				{"include": "#liquid_filter"},
+				{"include": "#string"},
+				{"include": "#operator"},
+				{"include": "#number"}
 			]
 		},
 
 		"liquid_output": {
 			"name": "source.lookml.liquid.output",
 			"match": "\\{\\{.+\\}\\}"
+		},
+
+		"liquid_filter":  {
+			"name": "source.lookml.liquid",
+			"match": "\\|\\s*((?![\\.0-9])[a-zA-Z0-9_-]+\\:?)\\s*",
+			"captures": {
+				"1": {"name": "source.lookml.liquid.filter"}
+			}
 		},
 
 		"sql_parameters": {
@@ -118,7 +128,7 @@
 								{"include": "#sql_numeric"},
 								{"include": "#liquid_tags"},
 								{"include": "#variable"},
-								{"include": "#strings"},
+								{"include": "#string"},
 								{"include": "#sql_function"},
 								{"include": "#sql_keyword"},
 								{"include": "#sql_constant"},
@@ -143,7 +153,7 @@
 				"0": {"name": "source.lookml.array.start"}
 			},
 			"patterns": [
-				{"include": "#strings"},
+				{"include": "#string"},
 				{
 					"name": "source.lookml.array.delimiter",
 					"match": "\\,"
@@ -159,7 +169,7 @@
 			"match": "\\b(yes|no|yesno)\\b"
 		},
 
-		"strings": {
+		"string": {
 			"name": "string.quoted.double.lookml",
 			"begin": "\"|\\'",
 			"end": "\"|\\'",
@@ -195,8 +205,8 @@
 			"patterns": [
 				{"include": "#sql_function"},
 				{"include": "#variable"},
-				{"include": "#strings"},
-				{"include": "#sql_numeric"},
+				{"include": "#string"},
+				{"include": "#number"},
 				{"include": "#sql_constant"},
 				{"include": "#sql_keyword"},
 				{"include": "#sql_keyword_main"},
@@ -214,9 +224,9 @@
 			"match": "(?<!\\w)(SELECT|FROM|LEFT|JOIN|GROUP BY|INNER|ORDER BY|LIMIT)(?!\\w)"
 		},
 
-		"sql_numeric": {
-			"name": "source.lookml.sql.numeric",
-			"match": "[0-9]+\\.?"
+		"number": {
+		  "match": "((-|\\+)\\s*)?[0-9]+(\\.[0-9]+)?",
+		  "name": "constant.numeric.lookml"
 		},
 
 		"sql_constant": {
