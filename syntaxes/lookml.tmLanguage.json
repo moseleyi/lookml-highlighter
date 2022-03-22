@@ -39,9 +39,10 @@
 				}
 			},
 			"patterns": [
+				{"include": "#liquid_output"},
 				{"include": "#scopes"},
 				{"include": "#variables"},
-				{"include": "#liquid"},
+				{"include": "#liquid_tags"},
 				{"include": "#array"},
 				{"include": "#parameters"},
 				{"include": "#comments"},
@@ -77,15 +78,24 @@
 			]
 		},
 
-		"liquid": {
+		"liquid_tags": {
 			"name": "source.lookml.liquid",
-			"begin": "\\{\\%",
-			"end" : "\\%\\}",
-			"captures": {
-				"0": {
-					"name": "source.lookml.liquid"
-				}
-			}
+			"begin": "\\{(\\%)",
+			"end": "(\\%)\\}",
+			"beginCaptures": {
+				"1": {"name": "source.lookml.liquid.tag"}
+			},
+			"endCaptures": {
+				"1": {"name": "source.lookml.liquid.tag"}
+			},
+			"patterns": [
+				{"include": "#strings"}
+			]
+		},
+
+		"liquid_output": {
+			"name": "source.lookml.liquid.output",
+			"match": "\\{\\{.+\\}\\}"
 		},
 
 		"sql_parameters": {
@@ -105,11 +115,13 @@
 						"1": {
 							"patterns": [
 								{"include": "#sql_numeric"},
-								{"include": "#liquid"},
+								{"include": "#liquid_tags"},
 								{"include": "#variable"},
+								{"include": "#strings"},
 								{"include": "#sql_function"},
 								{"include": "#sql_keyword"},
-								{"include": "#sql_constant"}
+								{"include": "#sql_constant"},
+								{"include": "#sql_keyword_main"}
 							]
 						}
 					}
@@ -150,7 +162,8 @@
 			"begin": "\"|\\'",
 			"end": "\"|\\'",
 			"patterns": [
-				{"include": "#constant"}
+				{"include": "#constant"},
+				{"include": "#liquid_output"}
 			]
 		},
 
@@ -180,14 +193,22 @@
 			"patterns": [
 				{"include": "#sql_function"},
 				{"include": "#variable"},
+				{"include": "#strings"},
 				{"include": "#sql_numeric"},
-				{"include": "#sql_constant"}
+				{"include": "#sql_constant"},
+				{"include": "#sql_keyword"},
+				{"include": "#sql_keyword_main"}
 			]
 		},
 
 		"sql_keyword" : {
 			"name": "source.lookml.sql.keyword",
-			"match": "[\\=\\-\\/\\*\\+]|AND|OR|IS|NOT|NULL"
+			"match": "(?<!\\w)([\\=\\-\\/\\*\\+]|AND|OR|IS|NOT|NULL|DISTINCT|AS|ON|WITH)(?!\\w)"
+		},
+
+		"sql_keyword_main": {
+			"name": "source.lookml.sql.keyword.main",
+			"match": "(?<!\\w)(SELECT|FROM|LEFT|JOIN|GROUP BY|INNER|ORDER BY|LIMIT)(?!\\w)"
 		},
 
 		"sql_numeric": {

@@ -15,10 +15,12 @@
     {"scope": ["source.lookml.sql.parameter.value"], "settings": {"foreground": "#555555"}},
     {"scope": ["source.lookml.sql.parameter.close"], "settings": {"foreground": "#aaaaaa"}},
     {"scope": ["source.lookml.sql.function.name", "source.lookml.sql.function.scope.start", "source.lookml.sql.function.scope.end"], "settings": {"foreground": "#00aa00"}},
-    {"scope": ["source.lookml.liquid"], "settings": {"foreground": "#ff00f2"}},
+    {"scope": ["source.lookml.liquid.tag"], "settings": {"foreground": "#0C6FFF"}},
+    {"scope": ["source.lookml.liquid.output"], "settings": {"foreground": "#17a6b0"}},
     {"scope": ["source.lookml.comment"], "settings": {"foreground": "#aaaaaa", "fontStyle": "italic"}},
     {"scope": ["source.lookml.constant"], "settings": {"foreground": "#00008b"}},
     {"scope": ["source.lookml.sql.keyword"], "settings": {"foreground": "#0C6FFF"}},
     {"scope": ["source.lookml.sql.numeric"], "settings": {"foreground": "#36982D"}},
-    ]
+    {"scope": ["source.lookml.sql.keyword.main"], "settings": {"foreground": "#555555", "fontWeight": "bold"}}
+  ]
 }
