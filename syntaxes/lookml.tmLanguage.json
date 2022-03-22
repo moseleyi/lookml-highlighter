@@ -40,9 +40,9 @@
 			},
 			"patterns": [
 				{"include": "#scopes"},
-				{"include": "#arrays"},
 				{"include": "#variables"},
 				{"include": "#liquid"},
+				{"include": "#array"},
 				{"include": "#parameters"},
 				{"include": "#comments"},
 				{"include": "#sql_parameters"}
@@ -59,6 +59,7 @@
 				}
 			},
 			"patterns": [
+				{"include": "#array"},
 				{
 					"name": "source.lookml.parameter.value",
 					"match": "(.*)",
@@ -124,9 +125,19 @@
 			"name": "source.lookml.array",
 			"begin": "\\[",
 			"end": "\\]",
+			"beginCaptures": {
+				"0": {"name": "source.lookml.array.start"}
+			},
 			"patterns": [
-				{"include": "#strings"}
-			]
+				{"include": "#strings"},
+				{
+					"name": "source.lookml.array.delimiter",
+					"match": "\\,"
+				}
+			],
+			"endCaptures": {
+				"0": {"name": "source.lookml.array.end"}
+			}
 		},
 
 		"yesno": {
@@ -136,8 +147,8 @@
 
 		"strings": {
 			"name": "string.quoted.double.lookml",
-			"begin": "\"",
-			"end": "\"",
+			"begin": "\"|\\'",
+			"end": "\"|\\'",
 			"patterns": [
 				{"include": "#constant"}
 			]
