@@ -94,6 +94,7 @@
 								{"include": "#sql_function"},
 								{"include": "#sql_keyword"},
 								{"include": "#sql_keyword_main"},
+                                {"include": "#sql_keyword_type"},
 								{"include": "#sql_numeric"}
 							]
 						}
@@ -215,14 +216,15 @@
 				}
 			},
 			"patterns": [
-				{"include": "#sql_function"},
 				{"include": "#variable"},
 				{"include": "#string"},
 				{"include": "#number"},
 				{"include": "#sql_constant"},
 				{"include": "#sql_keyword"},
 				{"include": "#sql_keyword_main"},
-				{"include": "#operator"}
+                {"include": "#sql_keyword_type"},
+				{"include": "#operator"},
+				{"include": "#sql_function"}
 			]
 		},
 
@@ -235,6 +237,11 @@
 			"name": "source.lookml.sql.keyword.main",
 			"match": "(?<!\\w)(SELECT|FROM|LEFT|JOIN|GROUP BY|INNER|ORDER BY|LIMIT)(?!\\w)"
 		},
+
+        "sql_keyword_type": {
+            "name": "source.lookml.sql.keyword.type",
+            "match": "(?<!\\w)(BOOL|BOOLEAN|VARCHAR|NUMERIC|DECIMAL|INTEGER|)(?!\\w)"
+        },
 
 		"sql_constant": {
 			"name": "source.lookml.sql.constant.language",
