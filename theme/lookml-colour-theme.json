@@ -30,5 +30,13 @@
                "keyword.operator.expression.lookml"],     "settings": {"foreground": "#0C6FFF"}},
     {"scope": ["source.lookml.sql.keyword.main"],         "settings": {"foreground": "#555555"}}
   ],
-  "font-family": "Arial"
+  "font-family": "Arial",
+  "colors": {
+    "activityBar.background": "#ffffff",
+    "activityBar.foreground": "#000000",
+    "activityBar.activeBorder": "#615386",
+    "activityBar.activeBackground": "#ff00ff",
+    "activityBar.activeForeground": "#ffffff",
+    "activityBarBadge.background": "#615386"
+  }
 }
